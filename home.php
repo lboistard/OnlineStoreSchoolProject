@@ -5,6 +5,7 @@
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="home.css">
 
+	<!-- this line should be set at a comment -->
 	<meta http-equiv=”refresh” content="5" />
 
 </head>
