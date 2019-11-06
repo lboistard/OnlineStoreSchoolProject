@@ -5,7 +5,6 @@
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="home.css">
 
-	<!-- this line should be set at a comment -->
 	<meta http-equiv=”refresh” content="5" />
 
 </head>
@@ -16,6 +15,9 @@
 		<!-- cote gauche de l'ecran d'accueil -->
 		<div id="content">
 
+			<!--
+				Ajout de la description de l'entreprise dans la balise <p>
+			-->
 			<div class="presentation">
 				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -24,17 +26,25 @@
 					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
 				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 			</div>
-			<div class="ogin">
-				<div id="login">
 
-					<a href="login.html">
-						<button class="button loginButton">Log In</button>
+			<!--
+				Button de log vers les autres pages
+			-->
+			<div class="login">
+				
+
+				<div id="createAccount">
+					<a href="createAccount.php">
+						<button class="button createAccountButton">Create Account</button>
 					</a>
 					
-					
 				</div>
-				<div id="createAccount">
-					<button class="button createAccountButton">Create Account</button>
+				
+
+				<div id="login">
+					<a href="login.php">
+						<button class="button loginButton">Log In</button>
+					</a>
 				</div>
 				
 			</div>
