@@ -23,7 +23,7 @@
 					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
 				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 			</div>
-			<div class="Login">
+			<div class="ogin">
 				<div id="login">
 
 					<a href="login.html">
@@ -41,7 +41,7 @@
 		
 		<!-- cote droit de l'ecran d'accueil -->
 		<div id="right">
-			<img id="imageBackground" src="Group 120.png">
+			<img id="imageBackground" src="Images/Home Background Image.png">
 		</div>
 		
 		
