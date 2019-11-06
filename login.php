@@ -48,8 +48,7 @@
 
 	</div>
 </section>
-	<!--Lien vers la page Create Account-->
-	<a href="">déjà inscrit ? :: transferer dans la page create account</a>
+	
 	
 </body>
 </html>

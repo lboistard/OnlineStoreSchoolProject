@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Login</title>
+	<title>Create Account</title>
 	<!-- Supprimer le <meta> ci dessous pour enelver l'auto refresh de la page -->
 	<meta http-equiv="refresh" content="1"/>
 	<link rel="stylesheet" type="text/css" href="login.css">
@@ -48,6 +48,8 @@
 
 	</div>
 </section>
+<!--Lien vers la page Log in-->
+	<a href="login.php">déjà inscrit ? :: transferer dans la page create account</a>
 	
 	
 </body>
