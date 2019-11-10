@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="home.css">
 
-	<meta http-equiv=”refresh” content="5" />
+	<!--  <meta http-equiv=”refresh” content="5" /> -->
 
 </head>
 <body>
