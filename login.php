@@ -21,11 +21,11 @@ session_start();
 
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-		if (empty($_POST["category"])) {
-			$categoryError = "Category is required";
-		} else {
-			$category = test_input($_POST["category"]);
-		}
+			if (empty($_POST["category"])) {
+				$categoryError = "Category is required";
+			} else {
+				$category = test_input($_POST["category"]);
+			}
 	}
 
 	function test_input($data) {
@@ -86,9 +86,21 @@ session_start();
 	</section>
 
 	<?php
-	echo "<h2>Your Input:</h2>";
-	echo "<br>";
-	echo $category;
+
+	$cate = $_POST['category'];
+	switch ($cate) {
+		case 'client':
+			header("Location : http://localhost:8888/Projet%20PHP/test.php");
+			exit;
+		break;
+
+		case 'manager':
+			echo "<h1>Test</h1>";$
+			exit;
+		break;
+		
+	
+	}
 	?>
 	
 	
