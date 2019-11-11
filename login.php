@@ -1,108 +1,70 @@
 <?php 
-session_start(); 
+	session_start(); 
+
+	//Variables
+	$ClientMail = $_POST['emailClient'];
+	$ClientPassword = $_POST['passwordClient'];
+	$ManagerMail = $_POST[''];
+	$ManagerPassword = $_POST[''];
+	$category = "";
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Login</title>
-	<!-- Supprimer le <meta> ci dessous pour enelver l'auto refresh de la page -->
-	<!--  <meta http-equiv="refresh" content="1"/> -->
-	<link rel="stylesheet" type="text/css" href="login.css">
-	<meta charset="utf-8">
+	<title>Form</title>
+	<link rel="stylesheet" type="text/css" href="login.css">	
 </head>
 <body>
+	<header>
+		<img src="">
+	</header>
 
-	<?php 
-		//init des vars
-		$category = "";
-		$categoryError ="";
+	<div id="mainBlock">
+		
+		<!-- Choix manager ou Client-->
+		<input type="radio" name="toggle" id="signup" checked><input type="radio" name="toggle" id="login">
+		<label for="signup">Client</label>
+		<label for="login">Manager</label>
 
+		<!-- ADD this to input pattern="^([a-z0-9_\.-]{3,32})@([a-z0-9_\.-]{2, 12})\.([a-z\.]{2,6})$"-->
 
-		if ($_SERVER["REQUEST_METHOD"] == "POST") {
+		
+		<!-- Client Part --> 
 
-			if (empty($_POST["category"])) {
-				$categoryError = "Category is required";
-			} else {
-				$category = test_input($_POST["category"]);
-			}
-	}
-
-	function test_input($data) {
-		$data = trim($data);
-		$data = stripslashes($data);
-		$data = htmlspecialchars($data);
-		return $data;
-	}
-	 ?>
-	
-	<section id="rest">
-		<!--Formulaire qui permet de se connecter-->
-<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"
-	class="form-example">
+		<div id="clientFields">	
+			
+			<form method="POST" action="client.php" name="formulaireClient">
+				<label for="email">Email</label>
+				<input type="email" id="emailClient" maxlength="50" name="emailClient"  required />
+				<label for="password">
+					Password <span id="passNote">(8 characters)</span>
+				</label>
+				<input type="password" id="password"  name="passwordClient" maxlength="26" required />			
+				<input type="submit" value="Log In"/>
+			</form>		
+			
+		</div>
 		
 
-			<input type="radio" id="clientButton" name="category" 
 
-				<?php if (isset($category) && $category=="client") 
-					echo "checked";
-				?>
+	<!-- Manager Part --> 
+		<div id="managerFields">
+			<form method="POST" action="manager.php" name="formulaireManager">
+				<label for="loginperson">Email</label>
+				<input type="email" id="emailManager" maxlength="50" />
+				
+				<label for="loginpassword">Password 
+					<span id="passNote">(8 characters)</span>
+				</label>
+				
+				<input type="password" id="loginpassword" maxlength="26" />
+				<input type="submit" value="Log In"/>
 
-			value="client" checked>
+			</form>
 			
-				<h2>Client</h2>
-		
+		</div>
+	</div>
 
-			<input type="radio" id="managerButton" name="category" 
-				<?php if (isset($category) && $category=="manager") {
-					echo "checked";
-				}
-				?>
-
-			value="manager">
-			<h2>Manager</h2>
-			
-		
-
-				<input type="submit" name="submit" value="Log In">
-
-<!--
-			<div class="form-example">
-				<input type="email" name="email" id="email" required placeholder="email">
-			</div>
-			
-			<div class="form-example">	
-				<input type="password" name="password" id="password" required placeholder="password">
-			</div>
-
-			
-			
-		
--->
-		</form>
-
-
-
-	</section>
-
-	<?php
-
-	$cate = $_POST['category'];
-	switch ($cate) {
-		case 'client':
-			header("Location : http://localhost:8888/Projet%20PHP/test.php");
-			exit;
-		break;
-
-		case 'manager':
-			echo "<h1>Test</h1>";$
-			exit;
-		break;
-		
-	
-	}
-	?>
-	
-	
 </body>
 </html>
