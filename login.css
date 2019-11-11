@@ -1,0 +1,179 @@
+/* Before  */
+* {
+  transition:all .5s;
+}
+
+::selection {
+  color:black;
+  background:#F26F63;
+}
+
+
+/* Importation des fonts */
+@font-face {
+ font-family: "Arial Nova";
+ src: url("/Fonts/ArialNova-Bold.woff2") format("woff2"),
+        url("ArialNova-Bold.woff") format("woff");
+}
+
+/* CSS */
+
+body {
+  font-family: "ArialNova-Bold";
+  background-color:#99D0F2;
+  background-size:100%;
+}
+
+label {
+  display:block;
+  margin:5px 0 5px 0;
+  color:white;
+}
+
+input {
+  position:relative;
+  background:transparent;
+  border:2px solid white;
+  border-radius:5px;
+  font-size:20px;
+  font-family:Oxygen;
+  color:white;
+  padding:3px;
+  outline:none;
+  box-sizing:border-box;
+  z-index:1;
+}
+input:focus {
+  border:2px solid #707070; /* #45D6A9 */
+}
+input:valid {
+  opacity:1;
+}
+
+
+
+
+ /* CSS bouton Log In*/
+input[type="submit"] {
+  border:none;
+  margin-top:10px;
+  display: block;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  font-family:Merienda;
+  color:white;
+  background:#72B6F2;
+  width:60%;
+  padding:5px;
+  box-sizing:border-box;
+  cursor:pointer;
+  -webkit-appearance:none;
+}
+input[type="submit"]:hover {
+  background:#99D0F2;
+}
+input[type="submit"]:active {
+  color:#333;
+}
+
+
+
+/* CSS du radio button Client ou manager*/ 
+input[name="toggle"] {
+  display:none;
+}
+
+label[for="signup"], label[for="login"] {
+  display:inline-block;
+  color:white;
+  width:250px;
+  font-size:28px;
+  font-family:Merienda;
+  text-align:center;
+  background:#444;
+  padding:3px 0 3px 0;
+  cursor:pointer;
+}
+
+
+
+/* Block central */ 
+#mainBlock {
+  position:absolute;
+  top:30%;
+  left:50%;
+  transform:translateX(-50%);
+  padding:15px;
+  background:#F26F63; /* 4D4D4D */
+  box-sizing:border-box;
+}
+
+#mainBlock:before {
+  content:"";
+  position:absolute;
+  left:0;
+  top:-35px;
+  
+}
+
+#mainBlock:after {
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-35px;
+  
+}
+
+
+
+/*    */
+#signup:checked ~ label[for="signup"],
+#login:checked ~ label[for="login"] {
+  background:#72B6F2;
+}
+
+#signup:checked ~ #managerFields,
+#login:checked ~ #clientFields {
+  display:none;
+}
+
+#signup:checked ~ #clientFields,
+#login:checked ~ #managerFields {
+  display:block;
+}
+
+
+
+
+#clientFields {
+  margin-top:20px;
+  font-family:Oxygen;
+  font-size:20px;
+}
+
+#managerFields {
+  margin-top:20px;
+  display:none;
+}
+
+
+
+
+#emailClient, #emailManager, #password, #loginpassword {
+  display:block;
+  width:500px;
+}
+#passNote {
+  font-size:14px;
+  color:white;
+}
+
+#managerFields label {
+  margin:5px 0 5px 0;
+  font-family:Oxygen;
+  font-size:20px;
+}
+#managerFields input {
+  width:100%;
+}
