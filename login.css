@@ -18,6 +18,8 @@
 
 /* CSS */
 
+
+
 body {
   font-family: "ArialNova-Bold";
   background-color:#99D0F2;
@@ -96,7 +98,10 @@ label[for="signup"], label[for="login"] {
   cursor:pointer;
 }
 
-
+#wrondData{
+  margin: -10;
+  padding: -10;
+}
 
 /* Block central */ 
 #mainBlock {
