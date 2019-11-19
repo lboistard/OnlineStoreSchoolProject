@@ -1,6 +1,5 @@
 <?php 
 session_start(); 
-
 	//Variables
 $ClientMail = $_POST['emailClient'];
 $ClientPassword = $_POST['passwordClient'];
@@ -18,7 +17,7 @@ $category = "";
 
 	<meta charset="utf-8">
 
-	<link rel="stylesheet" type="text/css" href="login.css">
+
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -31,7 +30,6 @@ $category = "";
 
 <script>
 	$(function() {
-
     //Formulaire client 
     $('#client-link').click(function(e) {
     	$("#client-form").delay(100).fadeIn(100);
@@ -40,7 +38,6 @@ $category = "";
     	$(this).addClass('active');
     	e.preventDefault();
     });
-
     //formulaire manager
     $('#manager-link').click(function(e) {
     	$("#manager-form").delay(100).fadeIn(100);
@@ -50,7 +47,6 @@ $category = "";
     	e.preventDefault();
     });
 });
-
 </script>
 
 
@@ -69,7 +65,6 @@ $category = "";
 	<div class="row">
 		<div class="cold-md-8 ml-auto mr-auto">
 			<?php 
-
 		/*
 			Error message quand le user n'est pas dans la database
 		*/
@@ -82,7 +77,6 @@ $category = "";
 					</div>";
 				}
 			}
-
 			?>
 		</div>
 
@@ -116,7 +110,7 @@ $category = "";
 					<div class="row">
 						<div class="col-lg-12">
 
-							<form id="client-form" method="POST" action="Client.php?createAccount=0" role="form" style="display: block;">
+							<form id="client-form" method="POST" action="clientRequest.php?createAccount=0" role="form" style="display: block;">
 
 
 
@@ -210,4 +204,3 @@ $category = "";
 
 </body>
 </html>
-

@@ -73,8 +73,7 @@
         <div class="panel-body">
           <div class="row">
             <div class="col-lg-12">
-
-              <form id="client-form" action="http://phpoll.com/login/process" method="post" role="form" style="display: block;">
+              <form id="client-form" action="clientRequest.php?createAccount=1" method="POST" role="form" style="display: block;">
 
                 <!-- Nom et Prénom du client -->
                 <div class="row">
@@ -89,7 +88,6 @@
 
                 <!-- Adresse mail du client -->
                 <div class="form-group">
-
                   <input type="mail" name="mailClient" id="mailClient" class="form-control" placeholder="Adresse Mail">
                 </div>
 
@@ -143,7 +141,7 @@
 
 
 
-            <form id="manager-form" action="http://phpoll.com/register/process" method="post" role="form" style="display: none;">
+            <form id="manager-form" action="" method="post" role="form" style="display: none;">
 
 
 
