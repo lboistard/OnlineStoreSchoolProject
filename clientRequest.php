@@ -1,52 +1,53 @@
 <?php
+session_start();
 
-/*
-
-CETTE PAGE EST POUR LES CLIENTS
-
-*/
-
-
-$hostname = 'localhost';
-$username = 'root';
-$password = 'root';
-$myDataBase = 'OnlineStoreProject';
-
-	/*
-		Récupération des varaiables des formalaires
-	*/
+		//~-------------------------------------------------------------
+		//~ Variables de SESSION 
+		//~-------------------------------------------------------------
 		$accountGet = $_GET['createAccount'];
-	
 		$cookies = 'empty';
 		$Type = 'Client';
 		$mailExist ='false';
 		$passwordExist = 'false';
+		$Commentaires_Produit = " ";
+		$mailIsAllreadyUsed ="" ;
 
+		//~-------------------------------------------------------------
+		//~ Fonction
+		//~-------------------------------------------------------------
+		function verif_User($arg_1, $arg_2)
+		{		    
+		    echo "Exemple de fonction.\n";		    
+		    return $retval;
+		}
 
-	/* 
-		Connection to DATABASE
-	*/	
-		$connect=mysqli_connect($hostname,$username,$password,$myDataBase);
-		if($connect){
-			echo"connexion réussite <br/>";
+		//~-------------------------------------------------------------
+		//~ Connexion à la DB
+		//~-------------------------------------------------------------
+		$hostname = 'localhost';
+		$username = 'root';
+		$passwordDB = 'root';
+		$myDataBase = 'OnlineStoreProject';
 
-
-	/*
-		Préparation de la requete de confirmation d'email
-	*/
-
-		if (isset($accountGet)) {
-
+		$connect=mysqli_connect($hostname,$username,$passwordDB,$myDataBase);
 		
-		
-			if ($accountGet == '0'){
-				if(isset($_POST['mailClient']) && isset($_POST['passwordClient'])){
-					$Adresse_Mail_Client = $_POST['mailClient'];
-					$Password_Client = md5($_POST['passwordClient']);
-				}
+		if($connect){	
+			if (isset($accountGet)) {
 
-				$requete = "SELECT Adresse_Mail, Password, Prénom, Nom from User";
-				$resultat = mysqli_prepare($connect,$requete);//liaison des paramètres
+				//~-------------------------------------------------------------
+				//~ Login
+				//~-------------------------------------------------------------
+				if ($accountGet == '0'){	
+
+					if(isset($_POST['mailClient']) && isset($_POST['passwordClient'])){
+
+						$Adresse_Mail_Client = $_POST['mailClient'];
+						$Password_Client = md5($_POST['passwordClient']);
+						$_SESSION['emailClientSession'] = $_POST['mailClient'];
+					}
+
+					$requete = "SELECT Adresse_Mail, Password, Prénom, Nom from User";
+					$resultat = mysqli_prepare($connect,$requete);//liaison des paramètres
 
 
 				$var = mysqli_stmt_execute($resultat);
@@ -54,91 +55,126 @@ $myDataBase = 'OnlineStoreProject';
 					echo"echec de l'exécution de la requête.<br/>";
 				}else{
 
-					//Association des variables de résultats
+					
 					$var = mysqli_stmt_bind_result($resultat,$Adresse_Mail, $Password, $Prénom, $Nom);//lecture des valeurs
-					echo "Mail et password des personnes <br/>";
-
-					/*
-						Check si l'adresse mail existe bien à un moment où non
-					*/
-					while(mysqli_stmt_fetch($resultat)){
-						if ($Adresse_Mail == $Adresse_Mail_Client && md5($Password) == $Password_Client) {
-							$mailExist = "true";
+					
+						//~-------------------------------------------------------------
+						//~ Regarde si le mail saisi existe, si non on revoit une erreur
+						//~-------------------------------------------------------------
+						while(mysqli_stmt_fetch($resultat)){							
+							if ($Adresse_Mail == $Adresse_Mail_Client && $Password == $Password_Client) {
+								$mailExist = "true";
+							}
 						}
-					}
+
+						mysqli_stmt_close($resultat);
+
+						if ($mailExist == 'true') {
+							header("location:Client.php");
+						}
+						elseif($mailExist == 'false'){
+							header("location:login.php?errorMessage=faux");
+						}
+					}			
+				}
+
+				//~-------------------------------------------------------------
+				//~ Création d'un compte
+				//~-------------------------------------------------------------
+				elseif ($accountGet == '1') {
+
+						if(isset( $_POST['nomClient']) && isset($_POST['prenomClient']) && isset($_POST['mailClient']) && isset($_POST['passwordClient']) && isset($_POST['telephoneClient']) && isset($_POST['adresseClient']) && isset($_POST['codePostalClient']) && isset($_POST['passwordAgainClient'])){
+
+							$Nom_Client = $_POST['nomClient'];
+							$Prenom_Client = $_POST['prenomClient'];
+							$Adresse_Mail_Client_Create = $_POST['mailClient'];
+							$Password_Client_Create = md5($_POST['passwordClient']);
+							$Password_Again_Client_Create = md5($_POST['passwordAgainClient']);
+							$Telephone_Client = $_POST['telephoneClient'];
+							$Adresse_Client = $_POST['adresseClient'];
+							$CodePostal_Client = $_POST['codePostalClient'];
+
+							if ($Password_Client_Create == $Password_Again_Client_Create) {
+								
+							}else{
+								header('location:createAccount.php?wrongPassword=faux');
+							}
+						}
+
+						//~-------------------------------------------------------------
+						//~ Vérification qu'aucun compte similaire n'existe
+						//~-------------------------------------------------------------
+						$requete_UserAllreadyExist = "SELECT Adresse_Mail from User";
+						$resultat_UserAllreadyExist = mysqli_prepare($connect,$requete_UserAllreadyExist);//liaison des paramètres
+						$var_UserAllreadyExist = mysqli_stmt_execute($resultat_UserAllreadyExist);
+
+						if($var_UserAllreadyExist == false){
+							echo"echec de l'exécution de la requête.<br/>";
+						}
+						else{
+
+							$var = mysqli_stmt_bind_result($resultat_UserAllreadyExist,$Adresse_Mail);//lecture des valeurs
 					
-					mysqli_stmt_close($resultat);
+							//~-------------------------------------------------------------
+							//~ Regarde si le mail saisi existe, si OUI on revoit une erreur
+							//~-------------------------------------------------------------
+							while(mysqli_stmt_fetch($resultat_UserAllreadyExist)){							
+								if ($Adresse_Mail == $Adresse_Mail_Client_Create) {
+									$mailIsAllreadyUsed = "true";
+								}
+							}
 
-					if ($mailExist == 'true') {
-						header("location:temp.php");
-					}
-					elseif($mailExist == 'false'){
-						header("location:login.php?errorMessage=faux");
-					}
-				}			
-		}
+							mysqli_stmt_close($resultat_UserAllreadyExist);
 
+							if ($mailIsAllreadyUsed == "true") {
+								
+								header('location:createAccount.php?allreadyUsed=true');
+							}else{	
+								$req="INSERT INTO User (Nom,Prénom,Adresse_Mail,Password, Téléphone,Adresse_Client,Code_Postal,Commentaires_Produit, Cookies, Type ) 
+								VALUES(?,?,?,?,?,?,?,?,?,?)";
 
-			elseif ($accountGet == '1') {
+								$res=mysqli_prepare($connect,$req);					
+								$var=mysqli_stmt_bind_param($res,'ssssisisss',$Nom_Client,$Prenom_Client,$Adresse_Mail_Client_Create, $Password_Client_Create , $Telephone_Client, $Adresse_Client,$CodePostal_Client,$Commentaires_Produit, $cookies ,$Type );
 
-				echo "<br><br>EN 1<br>";
-				/*
-					On vérifie que tous est bien passé en post
-				*/
-				if(isset( $_POST['nomClient']) && isset($_POST['prenomClient']) && isset($_POST['mailClient']) && isset($_POST['passwordClient']) && isset($_POST['telephoneClient']) && isset($_POST['adresseClient']) && isset($_POST['codePostalClient'])){
-
-						$Nom_Client = $_POST['nomClient'];
-						$Prenom_Client = $_POST['prenomClient'];
-						$Adresse_Mail_Client_Create = $_POST['mailClient'];
-						$Password_Client_Create = md5($_POST['passwordClient']);
-						$Telephone_Client = $_POST['telephoneClient'];
-						$Adresse_Client = $_POST['adresseClient'];
-						$CodePostal_Client = $_POST['codePostalClient'];
-					}
-			
-					echo "Nom client is : " , $Adresse_Client  ," ","<br><br>";
-
-
-					$req="INSERT INTO User (Nom,Prénom,Adresse_Mail,Password, Téléphone,Adresse_Client,Code_Postal,Cookies, Type ) 
-					VALUES(?,?,?,?,?,?,?,?,?)";
-
-					//Préparationdelarequête					
-					$res=mysqli_prepare($connect,$req);
-					
-					//liaisondesparamètres
-					$var=mysqli_stmt_bind_param($res,'ssssisiss',$Nom_Client,$Prenom_Client,$Adresse_Mail_Client_Create, $Password_Client_Create , $Telephone_Client, $Adresse_Client,$CodePostal_Client, $cookies ,$Type );
-
-
-
-					$var=mysqli_stmt_execute($res);//exécutiondelarequête
+								$var=mysqli_stmt_execute($res);
 					
 					
-					if($var==false){
-						echo"echec de l'exécution de la requête.<br/>";
-					}
-					else{
-						echo"Personne est enregistrée<br/>";
-					}
-					mysqli_stmt_close($res);
-				
+								if($var==false){
+									echo"echec de l'exécution de la requête.<br/>";
+								}
+								
+								mysqli_stmt_close($res);
 
+							}
+
+						}
+
+						
+						//~-------------------------------------------------------------
+						//~ Ajout d'un user dans la BDD
+						//~-------------------------------------------------------------
+						
+
+				}
+
+			}else{
+				echo"echec de connexion  ".mysqli_connect_error()."<br/>";
 			}
 
-		}else{
-			echo"echec de connexion  ".mysqli_connect_error()."<br/>";
 		}
 
-	}
-	
-	if(mysqli_close($connect))
-		echo"deconnexion réussite<br/>";
-	
-	else
-		echo"echec de deconnexion"."<br/>";
+		if(mysqli_close($connect)){
+			
+		}
+
+		else{
+			echo"echec de deconnexion"."<br/>";
+		}
 
 
 
-	
-	
 
-	?>
+
+		include 'Client.php';
+
+		?>
