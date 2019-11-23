@@ -7,7 +7,7 @@ session_start();
 	//~-------------------------------------------------------------	
 	$refProduitDeSession = $_SESSION['ref'];
 	$mailDeSession = $_SESSION['emailClientSession'];
-
+	
 
 	//~-------------------------------------------------------------
 	//~ Variables de connexion à la DB
@@ -37,15 +37,23 @@ session_start();
 			$varRequeteRecup = mysqli_stmt_bind_result($resultatRequeteRecup,$PrenomClient, $Nom,$Adresse_Mail,$Téléphone, $Adresse_Client, $Code_Postal);
 
 			while(mysqli_stmt_fetch($resultatRequeteRecup)){
+			
 				$prenomClientEspace = $PrenomClient;
 				$NomClientEspace = $Nom;
+
+
 				$Adresse_MailClientEspace = $Adresse_Mail;
 				$TéléphoneClientEspace = $Téléphone;
 				$Adresse_ClientClientEspace = $Adresse_Client;
 				$Code_PostalClientEspace = $Code_Postal;
+
+
+				
 			}
 
-
+					mysqli_stmt_close($resultatRequeteRecup);
+		
+			
 		}
 
 	}else{
@@ -143,18 +151,32 @@ session_start();
 		<div class="row">
 
 			<div class="col-md-6 ml-auto mr-auto text-center">
-				<h1>Bienvenue dans votre <strong>espace </strong> <?php echo $prenomClientEspace; ?> !</h1>
+				<h1>Bienvenue dans <strong>votre espace </strong> <?php echo $prenomClientEspace; ?> !</h1>
 			</div>
 
 
 
 			<div class="col-md-8 ml-auto mr-auto text-center">	
 				<h6>Voici vos informations : </h6>
-				<br><br>
 			</div>
 
+			
 
 		</div>
+
+
+			<div class="row">
+				<?php 
+				if (isset($_GET['upToDate'])) {											
+					if ($_GET['upToDate'] == "true") {
+						echo "<div class=\"alert alert-success alert-dismissible fade show mt-md-2 ml-auto mr-auto text-center\">
+								Vos <strong>informations</strong> ont été mis à jour !
+							</div>";
+					}
+				}
+			 ?>
+
+			</div>
 
 		<div class="row">
 			<div class="col col-md-6  ml-auto mr-auto">
@@ -171,6 +193,10 @@ session_start();
 						<tr>
 							<th scope="row">Adresse Mail </th>
 							<td><?php echo $Adresse_MailClientEspace ?></td>	
+						</tr>
+						<tr>
+							<th scope="row">Téléphone </th>
+							<td><?php echo $TéléphoneClientEspace ?></td>	
 						</tr>
 						<tr>
 							<th scope="row">Adresse Client</th>
@@ -202,14 +228,29 @@ session_start();
 		<div class="modal fade" id="elegantModalForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content form-elegant">
+					<?php 
+					
+					 ?>
 					
 					<!--Texte En haut du form-->
 					<div class="modal-header text-center">
 						<h5 class="modal-title w-100 dark-grey-text my-3" id="myModalLabel">Vos nouvelles informations</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
+							<span aria-hidden="true"></span>
 						</button>
 					</div>
+
+					<?php 
+					
+						if (isset($_GET['sameAsBefore'])) {											
+							if ($_GET['sameAsBefore'] == "false") {
+								 echo "<div class=\"alert alert-warning alert-dismissible fade show mx-md-4 ml-auto mr-auto text-center\">
+								           	Il semble que votre <strong>ancien</strong> et votre <strong>nouveau</strong> soit identique
+								           </div>";
+							}
+						}
+
+					 ?>
 					
 					<!--Body-->
 					<form class="form" action="updateClient.php" role="form" method="POST">
@@ -235,9 +276,13 @@ session_start();
 								<input type="tel" 	name="Form-nouveauTel" id="Form-nouveauTel" class="form-control validate"  placeholder=<?php echo "$TéléphoneClientEspace"; ?>>				          				          
 							</div>
 
-							<div class="md-form pb-5">
+							<div class="md-form pb-3">
 								<label for="Form-newAdresse">Votre Adresse : </label>
 								<input  type="text" name="Form-newAdresse" id="Form-newAdresse" class="form-control validate"  placeholder="<?php echo $Adresse_ClientClientEspace ; ?>">				          				          
+							</div>
+							<div class="md-form pb-5">
+								<label for="Form-newAdresse">Votre Code Postal : </label>
+								<input  type="text" name="Form-newPostal" id="Form-newPostal" class="form-control validate"  placeholder="<?php echo $Code_PostalClientEspace ; ?>">				          				          
 							</div>
 
 							<div class="text-center mb-3">
