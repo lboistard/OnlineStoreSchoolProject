@@ -1,8 +1,10 @@
 <?php 
+
+  //~-------------------------------------------------------------
+  //~ Page de création de compte
+  //~-------------------------------------------------------------
+  
   session_start();
-
-
-
  ?>
 
 <!DOCTYPE HTML>
@@ -29,6 +31,7 @@
   </div>
 
   <?php 
+
       //~-----------------------------------------------------------------
       //~ Message d'erreur quand les deux passwords saisis sont différents
       //~-----------------------------------------------------------------
@@ -47,14 +50,8 @@
             </div>";
         }
       }
-      
-      
-
-
-      
-
-
-   ?>
+    ?>
+  
   <div class="row">
     <div class="col-md-7 ml-auto mr-auto">
       <div class="panel panel-login">        
@@ -110,6 +107,8 @@
                   </div>
                 </div>
               </div>
+
+              <!-- Lien vers la page de login si le user à déjà un compte -->
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-6 ml-auto mr-auto text-center">

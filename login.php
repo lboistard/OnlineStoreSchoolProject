@@ -96,6 +96,19 @@
 				}
 			}
 			?>
+
+			<?php 
+			if (isset($_GET['typeManager'])) {
+				if ($_GET['typeManager'] == 'faux'){
+					echo "<!-- Warning Alert -->
+					<div class=\"alert alert-danger alert-dismissible mr-auto ml-auto fade show\">
+					Vous ne disposer pas des droits du <strong>Manager</strong>
+					<button type=\"button\" class=\"close\" data-dismiss=\"alert\"></button>
+					</div>";
+				}
+			}
+
+			 ?>
 		</div>
 
 
@@ -140,6 +153,7 @@
 								<div class="form-group">
 
 									<input type="mail" name="mailClient" id="mailClient" class="form-control" placeholder="Adresse Mail Client">
+									<?php echo $_COOKIE['pseudo']; ?></input>
 								</div>
 
 								<!-- Password du client -->
@@ -177,16 +191,28 @@
 								//~ Formulaire manager
 								//~-------------------------------------------------------------
 							 ?>
-							<form id="manager-form" action="http://phpoll.com/register/process" method="post" role="form" style="display: none;">
+							<form id="manager-form" action="managerRequest.php" method="post" role="form" style="display: none;">
 
 								<!-- Adresse mail du client -->
 								<div class="form-group">
-									<input type="mail" name="mailClient" id="mailClient" tabindex="2" class="form-control" placeholder="Adresse Mail Manager">
+									<input type="mail" name="mailManager" id="mailManager" tabindex="2" class="form-control" placeholder="Adresse Mail Manager"  value=<?php  
+										if (isset($_COOKIE['mailManager'])) 
+											echo $_COOKIE['mailManager'];
+
+										{
+										
+									}?> required>
 								</div>
 
 								<!-- Password du client -->
 								<div class="form-group">
-									<input type="password" name="passwordClient" id="passwordClient" tabindex="2" class="form-control" placeholder="Mot de Passe">
+									<input type="password" name="passwordManager" id="passwordManager" tabindex="2" class="form-control" placeholder="Mot de Passe"value=<?php  
+										if (isset($_COOKIE['passwordManager'])) 
+											echo $_COOKIE['passwordManager'];
+
+										{
+										
+									}?> required>
 								</div>
 
 								<hr>

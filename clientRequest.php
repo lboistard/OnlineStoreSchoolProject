@@ -11,7 +11,8 @@ session_start();
 		$passwordExist = 'false';
 		$Commentaires_Produit = " ";
 		$mailIsAllreadyUsed ="" ;
-
+		$createAccountOK ="";
+		
 		//~-------------------------------------------------------------
 		//~ Fonction
 		//~-------------------------------------------------------------
@@ -39,24 +40,27 @@ session_start();
 				//~-------------------------------------------------------------
 				if ($accountGet == '0'){	
 
+					//~----------------------------------
+					//~ Set les variables saisis via POST
+					//~----------------------------------
 					if(isset($_POST['mailClient']) && isset($_POST['passwordClient'])){
 
 						$Adresse_Mail_Client = $_POST['mailClient'];
-						$Password_Client = md5($_POST['passwordClient']);
-						$_SESSION['emailClientSession'] = $_POST['mailClient'];
+						$Password_Client = md5($_POST['passwordClient']);		
 					}
 
+					//Requete qui récupère certains params de la table User
 					$requete = "SELECT Adresse_Mail, Password, Prénom, Nom from User";
-					$resultat = mysqli_prepare($connect,$requete);//liaison des paramètres
+					$resultat = mysqli_prepare($connect,$requete);
 
 
-				$var = mysqli_stmt_execute($resultat);
-				if($var == false){
-					echo"echec de l'exécution de la requête.<br/>";
-				}else{
-
-					
-					$var = mysqli_stmt_bind_result($resultat,$Adresse_Mail, $Password, $Prénom, $Nom);//lecture des valeurs
+					$var = mysqli_stmt_execute($resultat);
+					if($var == false){
+						echo"echec de l'exécution de la requête.<br/>";
+					}else{				
+						
+						// Liaison des valeurs de la requete à des variables
+						$var = mysqli_stmt_bind_result($resultat,$Adresse_Mail, $Password, $Prénom, $Nom);
 					
 						//~-------------------------------------------------------------
 						//~ Regarde si le mail saisi existe, si non on revoit une erreur
@@ -64,6 +68,11 @@ session_start();
 						while(mysqli_stmt_fetch($resultat)){							
 							if ($Adresse_Mail == $Adresse_Mail_Client && $Password == $Password_Client) {
 								$mailExist = "true";
+								
+								//Set des variables de session
+								$_SESSION['emailClientSession'] = $_POST['mailClient'];
+								$_SESSION['nomClientSession'] = $Nom ;
+								$_SESSION['prenomClientSession']= $Prénom;
 							}
 						}
 
@@ -102,7 +111,7 @@ session_start();
 						}
 
 						//~-------------------------------------------------------------
-						//~ Vérification qu'aucun compte similaire n'existe
+						//~ Vérification qu'aucun compte similaire n'existe pas
 						//~-------------------------------------------------------------
 						$requete_UserAllreadyExist = "SELECT Adresse_Mail from User";
 						$resultat_UserAllreadyExist = mysqli_prepare($connect,$requete_UserAllreadyExist);//liaison des paramètres
@@ -126,35 +135,51 @@ session_start();
 
 							mysqli_stmt_close($resultat_UserAllreadyExist);
 
+
+
+							//~--------------------------------------------------------------------
+							//~ Si user n'existe pas on lui créer un compte via une requete préparé
+							//~--------------------------------------------------------------------
 							if ($mailIsAllreadyUsed == "true") {
-								
 								header('location:createAccount.php?allreadyUsed=true');
 							}else{	
-								$req="INSERT INTO User (Nom,Prénom,Adresse_Mail,Password, Téléphone,Adresse_Client,Code_Postal,Commentaires_Produit, Cookies, Type ) 
+								
+								//requete préparé
+								$requestCreateAccount="INSERT INTO User (Nom,Prénom,Adresse_Mail,Password, Téléphone,Adresse_Client,Code_Postal,Commentaires_Produit, Cookies, Type ) 
 								VALUES(?,?,?,?,?,?,?,?,?,?)";
 
-								$res=mysqli_prepare($connect,$req);					
-								$var=mysqli_stmt_bind_param($res,'ssssisisss',$Nom_Client,$Prenom_Client,$Adresse_Mail_Client_Create, $Password_Client_Create , $Telephone_Client, $Adresse_Client,$CodePostal_Client,$Commentaires_Produit, $cookies ,$Type );
+								$resultCreateAccount=mysqli_prepare($connect,$requestCreateAccount);					
+								
+								//bind des résultat de la requete
+								$var=mysqli_stmt_bind_param($resultCreateAccount,'ssssisisss',$Nom_Client,$Prenom_Client,$Adresse_Mail_Client_Create, $Password_Client_Create , $Telephone_Client, $Adresse_Client,$CodePostal_Client,$Commentaires_Produit, $cookies ,$Type );
 
-								$var=mysqli_stmt_execute($res);
+								$var=mysqli_stmt_execute($resultCreateAccount);
 					
 					
 								if($var==false){
 									echo"echec de l'exécution de la requête.<br/>";
+								}else{
+									$createAccountOK ='true';
 								}
 								
-								mysqli_stmt_close($res);
+								mysqli_stmt_close($resultCreateAccount);
+
+								//~--------------------------------------------------------------------
+								//~ Si user créer on définit des variables de Session = redirect
+								//~--------------------------------------------------------------------
+								if ($createAccountOK == 'true') {
+									//Set des variables de session
+									$_SESSION['emailClientSession'] = $Adresse_Mail_Client_Create;
+									$_SESSION['nomClientSession'] = $Nom_Client ;
+									$_SESSION['prenomClientSession']= $Prenom_Client;
+
+									//redirect vers page client
+									header("location:Client.php");
+								}
+
 
 							}
-
 						}
-
-						
-						//~-------------------------------------------------------------
-						//~ Ajout d'un user dans la BDD
-						//~-------------------------------------------------------------
-						
-
 				}
 
 			}else{
@@ -171,10 +196,4 @@ session_start();
 			echo"echec de deconnexion"."<br/>";
 		}
 
-
-
-
-
-		include 'Client.php';
-
-		?>
+?>
