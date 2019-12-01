@@ -12,16 +12,7 @@ session_start();
 		$Commentaires_Produit = " ";
 		$mailIsAllreadyUsed ="" ;
 		$createAccountOK ="";
-		
-		//~-------------------------------------------------------------
-		//~ Fonction
-		//~-------------------------------------------------------------
-		function verif_User($arg_1, $arg_2)
-		{		    
-		    echo "Exemple de fonction.\n";		    
-		    return $retval;
-		}
-
+	
 		//~-------------------------------------------------------------
 		//~ Connexion à la DB
 		//~-------------------------------------------------------------
@@ -176,18 +167,13 @@ session_start();
 									//redirect vers page client
 									header("location:Client.php");
 								}
-
-
 							}
 						}
 				}
-
 			}else{
 				echo"echec de connexion  ".mysqli_connect_error()."<br/>";
 			}
-
 		}
-
 		if(mysqli_close($connect)){
 			
 		}

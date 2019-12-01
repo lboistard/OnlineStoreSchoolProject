@@ -1,11 +1,6 @@
 <?php 
-
-  //~-------------------------------------------------------------
-  //~ Page de création de compte
-  //~-------------------------------------------------------------
-  
-  session_start();
- ?>
+session_start();
+?>
 
 <!DOCTYPE HTML>
 <html lang="en">
@@ -31,27 +26,26 @@
   </div>
 
   <?php 
-
       //~-----------------------------------------------------------------
       //~ Message d'erreur quand les deux passwords saisis sont différents
       //~-----------------------------------------------------------------
       if (isset($_GET['wrongPassword'])) {
         if ($_GET['wrongPassword'] == "faux") {
-        echo "<div class=\"alert alert-warning alert-dismissible fade show col-md-6 ml-auto mr-auto text-center\">
-            Les deux <strong>Mot de Passe</strong> saisis sont diffénts
-            </div>";
+          echo "<div class=\"alert alert-warning alert-dismissible fade show col-md-6 ml-auto mr-auto text-center\">
+          Les deux <strong>Mot de Passe</strong> saisis sont diffénts
+          </div>";
         }
       }
-    
+
       if (isset($_GET['allreadyUsed'])) {
         if ($_GET['allreadyUsed'] == "true") {
-        echo "<div class=\"alert alert-warning alert-dismissible fade show col-md-6 ml-auto mr-auto text-center\">
-            Votre <strong>Mail</strong> est déjà affilié à un compte !
-            </div>";
+          echo "<div class=\"alert alert-warning alert-dismissible fade show col-md-6 ml-auto mr-auto text-center\">
+          Votre <strong>Mail</strong> est déjà affilié à un compte !
+          </div>";
         }
       }
-    ?>
-  
+
+  ?>
   <div class="row">
     <div class="col-md-7 ml-auto mr-auto">
       <div class="panel panel-login">        
@@ -107,8 +101,6 @@
                   </div>
                 </div>
               </div>
-
-              <!-- Lien vers la page de login si le user à déjà un compte -->
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-6 ml-auto mr-auto text-center">
@@ -126,4 +118,3 @@
 </div>
 </body>
 </html>
-

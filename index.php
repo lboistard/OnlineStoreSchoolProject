@@ -4,6 +4,10 @@
 	//~ Ceci est la page d'accueil
 	//~-------------------------------------------------------------
 	
+	//on destroy la session potentiel
+	session_destroy();
+
+	//on restart la session
 	session_start();
 
  ?>
@@ -45,6 +49,7 @@
 			box-shadow: none;
 		}
 
+
 		footer {
 			margin-top: 100px;
 			position: absolute;
@@ -67,6 +72,7 @@
 					<img id="logo" src="Images/SPI.png">
 				</div>
 				
+
 				
 				<div class="col-md-6 order-md-1 text-center text-md-left pr-md-5">
 					<h1 class="mb-3 bd-text-purple-bright">Scanner Pc Imprimantes</h1>
