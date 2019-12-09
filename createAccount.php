@@ -59,35 +59,35 @@ session_start();
                 <!-- Nom et Prénom du client -->
                 <div class="row">
                   <div class="form-group col-md-6">
-                    <input type="text" name="nomClient" id="nomClient" class="form-control" placeholder="Nom">
+                    <input type="text" minlength="2" name="nomClient" id="nomClient" class="form-control" placeholder="Nom" required>
                   </div>
                   <div class="form-group col-md-6 text-center">
-                    <input type="text" name="prenomClient" id="prenomClient"  class="form-control" placeholder="Prénom">
+                    <input type="text" minlength="2" name="prenomClient" id="prenomClient"  class="form-control" placeholder="Prénom" required>
                   </div>
                 </div>
                 <!-- Adresse mail du client -->
                 <div class="form-group">
-                  <input type="mail" name="mailClient" id="mailClient" class="form-control" placeholder="Adresse Mail">
+                  <input type="mail" name="mailClient" pattern="^[\w]{1,}[\w.+-]{0,}@[\w-]{2,}([.][a-zA-Z]{2,}|[.][\w-]{2,}[.][a-zA-Z]{2,})$" id="mailClient" class="form-control" placeholder="Adresse Mail" required>
                 </div>
                 <!-- Password du client -->
                 <div class="form-group">
-                  <input type="password" name="passwordClient" id="passwordClient" class="form-control" placeholder="Mot de Passe">
+                  <input type="password" name="passwordClient" minlength="8" id="passwordClient" class="form-control" placeholder="Mot de Passe" required>
                 </div>
                 <!-- On Redemande le password du client -->
                 <div class="form-group">
-                  <input type="password" name="passwordAgainClient" id="passwordAgainClient" class="form-control" placeholder="Saisissez à nouveau votre Mot de Passe">
+                  <input type="password" name="passwordAgainClient" minlength="8" id="passwordAgainClient" class="form-control" placeholder="Saisissez à nouveau votre Mot de Passe" required>
                 </div>
                 <!-- Téléphone du Client -->
                 <div class="form-group">
-                  <input type="tel" name="telephoneClient" id="telephoneClient"  class="form-control" placeholder="Téléphone">
+                  <input type="tel" name="telephoneClient" id="telephoneClient" pattern="0[0-9]{1}[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}" class="form-control" placeholder="Téléphone" required>
                 </div>
                 <!-- Adresse_Client et Code Postal Client-->
                 <div class="row">
                   <div class="form-group col-md-8">
-                    <input type="text" name="adresseClient" id="adresseClient"  class="form-control" placeholder="Adresse Postal">
+                    <input type="text" name="adresseClient" id="adresseClient"  class="form-control" placeholder="Adresse Postal" required>
                   </div>
                   <div class="form-group col-md-4">
-                    <input type="number" name="codePostalClient" id="codePostalClient"  class="form-control" placeholder="Code Postal">
+                    <input type="number" name="codePostalClient" min="4" max="5" pattern="[0-9]{5}" id="codePostalClient"  class="form-control" placeholder="Code Postal" required>
                   </div>
                 </div>
                 <hr>

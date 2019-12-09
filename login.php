@@ -1,7 +1,7 @@
 <?php 
+	
 	session_start(); 
-	
-	
+
 	//~-------------------------------------------------------------
 	//~ Si les champs ont été remplis, on les met dans des variables
 	//~-------------------------------------------------------------
@@ -12,7 +12,7 @@
 		
 		$ManagerMail = $_POST['emailManager'];
 		$ManagerPassword = $_POST['passwordManager'];
-	}
+}
 ?>
 
 
@@ -74,7 +74,7 @@
 		//~-------------------------------------------------------------
 		//~ En-tete
 		//~-------------------------------------------------------------
-	 ?>
+	?>
 	<div class="py-3 text-center">
 		<a href="index.php"> <img class="d-block mx-auto mb-2" src="Images/SPI.png" alt="" width="170" height="170"></a>
 
@@ -93,7 +93,7 @@
 				if ($_GET['errorMessage'] == 'faux') {
 					echo "<!-- Warning Alert -->
 					<div class=\"alert alert-danger alert-dismissible fade show\">
-					Mauvaise <strong>Adresse mail</strong> et/ou <strong>mot de passe !</strong>
+					Mauvaise <strong>Adresse mail</strong> !</strong>
 					<button type=\"button\" class=\"close\" data-dismiss=\"alert\"></button>
 					</div>";
 				}
@@ -111,7 +111,17 @@
 				}
 			}
 
-			 ?>
+			if (isset($_GET['passFaux'])) {
+				if ($_GET['passFaux'] == 'faux'){
+					echo "<!-- Warning Alert -->
+					<div class=\"alert alert-danger alert-dismissible mr-auto ml-auto fade show\">
+					<strong>Mauvais</strong> mot de passe !
+					<button type=\"button\" class=\"close\" data-dismiss=\"alert\"></button>
+					</div>";
+				}
+			}
+
+			?>
 		</div>
 
 
@@ -122,7 +132,7 @@
 		//~-------------------------------------------------------------
 		//~ Corpus
 		//~-------------------------------------------------------------
-	 ?>
+	?>
 	<div class="row">
 		<div class="col-md-7 ml-auto mr-auto">
 			<div class="panel panel-login">
@@ -147,7 +157,7 @@
 								//~-------------------------------------------------------------
 								//~ Formulaire client
 								//~-------------------------------------------------------------
-							 ?>
+							?>
 							<form id="client-form" method="POST" action="clientRequest.php?createAccount=0" role="form" style="display: block;">
 
 
@@ -156,7 +166,7 @@
 								<div class="form-group">
 
 									<input type="mail" name="mailClient" id="mailClient" class="form-control" placeholder="Adresse Mail Client">
-									<?php echo $_COOKIE['pseudo']; ?></input>
+									</input>
 								</div>
 
 								<!-- Password du client -->
@@ -193,16 +203,16 @@
 								//~-------------------------------------------------------------
 								//~ Formulaire manager
 								//~-------------------------------------------------------------
-							 ?>
+							?>
 							<form id="manager-form" action="managerRequest.php" method="post" role="form" style="display: none;">
 
 								<!-- Adresse mail du client -->
 								<div class="form-group">
 									<input type="mail" name="mailManager" id="mailManager" tabindex="2" class="form-control" placeholder="Adresse Mail Manager"  value=<?php  
-										if (isset($_COOKIE['mailManager'])) 
-											echo $_COOKIE['mailManager'];
+									if (isset($_COOKIE['mailManager'])) 
+										echo $_COOKIE['mailManager'];
 
-										{
+									{
 										
 									}?> required>
 								</div>
@@ -210,10 +220,10 @@
 								<!-- Password du client -->
 								<div class="form-group">
 									<input type="password" name="passwordManager" id="passwordManager" tabindex="2" class="form-control" placeholder="Mot de Passe"value=<?php  
-										if (isset($_COOKIE['passwordManager'])) 
-											echo $_COOKIE['passwordManager'];
+									if (isset($_COOKIE['passwordManager'])) 
+										echo $_COOKIE['passwordManager'];
 
-										{
+									{
 										
 									}?> required>
 								</div>
@@ -229,7 +239,7 @@
 
 													//si aucun bouton client ou manager est coché, message 'JAUNE'
 
-												 ?>
+												?>
 											</button>
 										</div>											
 									</div>

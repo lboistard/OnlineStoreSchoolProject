@@ -28,21 +28,38 @@ if($connect){
 
 					<!-- Srcript pour Boostrap 4 -->
 					<!-- Scripts  -->
-			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>	
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+					<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+					<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>	
+					<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+					<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-			<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+					<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 
-			<link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+					<link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
 
 
 					<title>Manager</title>
 				</head>
 				<body>
 
-					<style>
+					<script type="text/javascript">
+						function myFunction() {
+
+							var x = document.getElementById("myDIV");
+
+							if (x.style.display === "block") {
+								x.style.display = "none";
+							} else {
+								x.style.display = "block";
+							}
+						}
+					</script>
+
+					<!-- Style du bloc commentaire hide puis afficher -->
+					<style type="text/css">
+						#myDIV {
+							display: none;
+						}
 						.form-elegant .font-small {
 							font-size: 0.8rem; 
 						}
@@ -99,17 +116,80 @@ if($connect){
 				<div class="row">
 					<div class="col-md-8 ml-auto mr-auto">
 						<div class="row">
-							<div class="col">
+							<div class="col-md-6">
 								<h1>Liste des produits</h1>
 							</div>
-							<div class="col">
+							<div class="col-md-3 px-0 mx-0">
 								
 								<form class="form-inline my-2 flex-row-reverse ">
-									<a href="#" class="btn btn btn-outline-dark" data-toggle="modal" data-target="#elegantModalForm">Ajouter un produit</a>
+									<a  href="#" class="ml-auto btn btn-outline-success my-2" data-toggle="modal" data-target="#elegantModalForm">Ajouter un produit</a>
+								</form>
+							</div>
+							<div class="col-md-3 px-0 mx-0">
+								<form class="form-inline my-2 flex-row-reverse ">
+
+									<a onclick="myFunction()" class="ml-auto btn btn-outline-success my-2"  href="#myDIV"><span> Rechercher un Produit</span></a>
 
 								</form>
 							</div>
 						</div>
+					</div>
+				</div>
+
+				<div class="row">
+
+
+					<div class="col-md-10 mr-auto ml-auto comment">
+
+						<!-- Div pour afficher commenter  -->
+						<div class="row ml-auto mr-auto">
+							<div class="col-md-12 ml-auto mr-auto">
+								<div id="myDIV">
+									<hr>
+									<form method="post" action="customProductManager.php">
+										<div class="row"  class="mr-auto ml-auto text-center">
+
+
+											<div class="form-group md-form dropdown col-md-6">		
+												<div class="row">
+													<div class="col-md-2 mt-md-2">
+														<label for="Form-TypeProduit">Catégorie</label>
+
+													</div>
+													<div class="col-md-6">
+														<select class="form-control" name="Form-TypeProduit" id="Form-TypeProduit">
+															<option type="text" value="Pc">Pc</option>
+															<option type="text" value="Scanners" >Scanners</option>
+															<option type="text" value="Imprimantes" >Imprimantes</option>
+														</select>
+													</div>
+
+												</div>				
+
+											</div>
+
+											<div class="form-group md-form col-md-6 flex-right">	
+												<div class="row">
+													<div class="col-md-4 mt-md-2 pl-md-4">
+														<label for="Form-TypeProduit">Marques en Stock : </label>									
+													</div>
+													<div class="col-md-6 pl-md-0">
+														<input type="mail" name="marqueProduit" id="marqueProduit" class="form-control" placeholder="Recherche Marque">
+													</div>										
+												</div>							
+											</div>								
+										</div>
+										<div class="row">
+											<div class="col-md-2 mr-auto ml-auto">
+
+												<input  type="submit" class=" btn btn-outline-dark form-control" value="Rechercher">
+											</div>
+										</div>
+									</form>
+									<hr>
+								</div>
+							</div>		
+						</div>	
 					</div>
 				</div>
 
@@ -125,6 +205,19 @@ if($connect){
 								Le <strong>produit</strong> à bien été ajouté<button type=\"button\" class=\"close\" data-dismiss=\"alert\"></button>
 						</div>";			#
 					}					
+				}
+
+				//~--------------------------------------------------------------------
+				//~ Message d'erreur si aucun produit ne correspond à la recherche
+				//~--------------------------------------------------------------------
+				if(isset($_GET['noProduct'])) {
+					if ($_GET['noProduct'] == 'true') {
+						echo "<!-- Warning Alert -->
+						<div class=\"alert alert-warning alert-dismissible fade show\">
+						Votre recherche ne correspond à aucun résultat !
+						<button type=\"button\" class=\"close\" data-dismiss=\"alert\"></button>
+						</div>";
+					}
 				}
 
 				?>
@@ -199,7 +292,7 @@ if($connect){
 							<input type="text" 	name="Form-libelProduit" id="Form-libelProduit" class="form-control validate" >				        	          
 						</div>
 
-						<div class="form-group md-form pb-3 pt-3 dropdown">						
+						<div class="form-group md-form pb-3 dropdown">						
 							<label for="Form-TypeProduit">Catégorie</label>
 							<select class="form-control" name="Form-TypeProduit" id="Form-TypeProduit">
 								<option type="text" value="Pc">Pc</option>
@@ -208,7 +301,7 @@ if($connect){
 							</select>				          				          
 						</div>
 
-						<div class=" form-group md-form pb-3 pt-3 dropdown">
+						<div class=" form-group md-form pb-3 dropdown">
 							<label for="Form-Marque">Marque</label>
 							<select class="form-control" name="Form-Marque" id="Form-Marque" >
 								<option type="text" value="Apple">Apple</option>
@@ -233,20 +326,20 @@ if($connect){
 							<input  type="number" name="Form-TVA" id="Form-TVA" class="form-control validate"  placeholder="20%">				          				          
 						</div>
 
-						<div class="md-form pb-5">
+						<div class="md-form pb-3">
 							<label for="Form-descriptionProduit">Description : </label>
 							<textarea  type="textarea" name="Form-descriptionProduit" id="Form-descriptionProduit" class="form-control validate"  placeholder=""></textarea>			          				          
 						</div>
 
 						<div class="md-form pb-3">
 							<label for="Form-LienImage">Lien image du produit</label>
-							<input type="text" id="Form-LienImage" name="Form-LienImage" class="form-control validate" placeholder="utiliser mysqlid">
+							<input type="text" id="Form-LienImage" name="Form-LienImage" class="form-control validate" placeholder="">
 
 						</div>
 
 
 						<div class="text-center mb-3">
-							<button type="submit" class="btn btn-outline-dark">Add product</button>
+							<button type="submit" class="btn btn-outline-dark">Ajouter produit</button>
 						</div>
 					</div>
 				</form>		

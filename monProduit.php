@@ -123,20 +123,20 @@ session_start();
 			?>
 
 
-					<!-- Style du bloc commentaire hide puis afficher -->
+			<!-- Style du bloc commentaire hide puis afficher -->
 			<style type="text/css">
 
 				footer {
 					
-						margin-top: 100px;
-			position: relative;
-			right: 0;
-			bottom: 0;
-			left: 0;
-			padding: 1rem;
-			color: white;
-			background-color: #606060;
-			text-align: center;
+					margin-top: 100px;
+					position: relative;
+					right: 0;
+					bottom: 0;
+					left: 0;
+					padding: 1rem;
+					color: white;
+					background-color: #606060;
+					text-align: center;
 				}
 
 			</style>
@@ -144,7 +144,7 @@ session_start();
 
 			
 			<!-- Header -->
-			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<nav class="navbar navbar-expand-lg navbar-light bg-light topPage">
 				<a class="nav-link" href="index.php"><i class="fa fa-home" aria-hidden="true"></i> Accueil </a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
@@ -162,7 +162,7 @@ session_start();
 						</li>
 					</ul>
 				</div>
-</nav>
+			</nav>
 
 
 			<!-- Retour au produit -->
@@ -248,27 +248,41 @@ session_start();
 
 											<!-- Commander POP UP -->
 											<div class="col mr-auto mb-2 d-flex flex-row-reverse">
-												<button  class="btn btn-outline-dark" href="#" class="active" id="client-link" data-toggle="modal" data-target="#exampleModalLong">Commander</button>
+												<button  class="btn btn-outline-dark" href="#" class="active" id="client-link" data-toggle="modal" data-target="#exampleModalLong">Acheter</button>
 											</div>
 
 											<!-- POP UP appear -->
 											<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
 												<div class="modal-dialog mx-auto" role="document">
-													<div class="modal-content">
-														<div class="modal-header">
-															<h5 class="modal-title" id="exampleModalLongTitle">Êtes-vous sûre d'acheter cet article</h5>
-															<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-																<span aria-hidden="true">&times;</span>
-															</button>
-														</div>											      
+													
 
-														<div class="modal-footer ">
+													<form method="post" action="Commander.php?maCommandeUnique=<?php echo $ref; ?>">
+														<div class="modal-content">
+															<div class="modal-header">
+																<h5 class="modal-title" id="exampleModalLongTitle">Êtes-vous sûre d'acheter cet article</h5>
+																<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																	<span aria-hidden="true">&times;</span>
+																</button>
 
-															<a href="commander.php" class="btn btn-light">Oui</a>
-															<button href=""  class="btn btn-dark">Non</button>
+															</div>				
 
+															<div class="modal-body">
+																<label>Quantité souhaité : </label>
+																<input type="number" name="nombreProduit" id="nombreProduit" class="form-control" placeholder="Quantité">
+
+
+															</div>							      
+
+															<div class="modal-footer ">
+
+																<button type="submit" class="btn btn-light">Oui</button>
+																<button href="#"  aria-label="Close" data-dismiss="modal" class="btn btn-dark">Non</button>
+
+															</div>
 														</div>
-													</div>
+													</form>
+
+
 												</div>
 											</div>
 

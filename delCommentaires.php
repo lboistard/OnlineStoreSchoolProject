@@ -7,6 +7,7 @@
  $newComment = " ";
 
 
+
 //~-------------------------------------------------------------
 //~ Variables de connexion à la DB
 //~-------------------------------------------------------------	
@@ -16,10 +17,10 @@ $password = 'root';
 $myDataBase = 'OnlineStoreProject';
 
 
-if (isset($_POST['idRep'])) {
+if (isset($_POST['idCommentaires'])) {
 		# code...
-	$idUserDelete = $_POST["idRep"];
-	$_SESSION['IdUserResponse'] = $idUserDelete;
+	$idComment = $_POST["idCommentaires"];
+	
 	
 }
 
@@ -32,7 +33,7 @@ $connect=mysqli_connect($hostname,$username,$password,$myDataBase);
 
 if($connect){
 
-		$requeteDelComment="UPDATE User SET Commentaires_Produit = '$newComment' WHERE Id=$idUserDelete";
+		$requeteDelComment="DELETE FROM Commentaires_Produit WHERE `Id` =  $idComment";
 
 		$resultDelComment=mysqli_query($connect,$requeteDelComment);
 
@@ -42,6 +43,8 @@ if($connect){
 		if($resultDelComment==false){
 			echo"Echec de l'exécution de la requête";
 		}else{
+
+			//header("location : actionOnComment.php");
 			header("location:nosClients.php?comSuppr=true");
 		}	
 
@@ -49,4 +52,7 @@ if($connect){
 	}else{
 		echo "echec";
 	} ?>
+
+
+
 

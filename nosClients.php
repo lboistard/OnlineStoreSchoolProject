@@ -142,8 +142,9 @@ if($connect){
 											<th style="width: 10%" scope="col">Adresse Mail</th>
 											<th style="width: 15%" scope="col">Adresse</th>
 											<th style="width: 7%" scope="col">Code Postal</th>
-											<th style="width: 45%" scope="col">Commentaires Client</th>
-											<th style="width: 22%" scope="col">Action</th>
+											<th style="width: 12%" scope="col">Action</th>
+											
+											
 											
 										</tr>
 									</thead>
@@ -161,24 +162,12 @@ if($connect){
 													<td ><?php echo $Adresse_Mail?></td>
 													<td ><?php echo $Adresse_Client; ?></td>
 													<td ><?php echo $Code_Postal;?></td>
-													<td ><?php 
-
-													$rest = substr($Commentaires_Produit, 0, 150);
-													echo $rest ,"...";
-													;?></td>
-													<td class="mx-0">
-														<form id="delCom" action="repondreCommentaires.php" method="post">
-															<input type="hidden" name="idDelete" value="<?php echo $Id; ?>"/>
-															<button class="btn btn-link" type="submit">Répondre</button>												
+													<td class="mx-md-0">
+														<form method="post" action="actionOnComment.php">
+															<button type="submit" name="idClient" value="<?php echo $Id; ?>" class="btn btn-link mx-0 px-0">Voir les commentaires du client</button >
 														</form>
-														
-														<br>
-														<form id="repCom" action="delCommentaires.php" method="post">
-															<input type="hidden" name="idRep" value="<?php echo $Id; ?>"/>
-															<button class="btn btn-link" type="submit">Supprimer</button>												
-														</form>
-													</td>					
-
+													</td>
+													
 													<?php
 												}
 											}

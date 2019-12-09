@@ -5,7 +5,7 @@ session_start();
 		//~ Variables de SESSION 
 		//~-------------------------------------------------------------
 		$accountGet = $_GET['createAccount'];
-		$cookies = 'empty';
+		$Panier = 'empty';
 		$Type = 'Client';
 		$mailExist ='false';
 		$passwordExist = 'false';
@@ -41,7 +41,7 @@ session_start();
 					}
 
 					//Requete qui récupère certains params de la table User
-					$requete = "SELECT Adresse_Mail, Password, Prénom, Nom from User";
+					$requete = "SELECT Adresse_Mail, Password, Prénom, Nom, Id from User";
 					$resultat = mysqli_prepare($connect,$requete);
 
 
@@ -51,20 +51,23 @@ session_start();
 					}else{				
 						
 						// Liaison des valeurs de la requete à des variables
-						$var = mysqli_stmt_bind_result($resultat,$Adresse_Mail, $Password, $Prénom, $Nom);
+						$var = mysqli_stmt_bind_result($resultat,$Adresse_Mail, $Password, $Prénom, $Nom, $Id);
 					
 						//~-------------------------------------------------------------
 						//~ Regarde si le mail saisi existe, si non on revoit une erreur
 						//~-------------------------------------------------------------
 						while(mysqli_stmt_fetch($resultat)){							
 							if ($Adresse_Mail == $Adresse_Mail_Client && $Password == $Password_Client) {
+								
 								$mailExist = "true";
 								
 								//Set des variables de session
 								$_SESSION['emailClientSession'] = $_POST['mailClient'];
 								$_SESSION['nomClientSession'] = $Nom ;
 								$_SESSION['prenomClientSession']= $Prénom;
+								$_SESSION['idClientSession']= $Id;
 							}
+							
 						}
 
 						mysqli_stmt_close($resultat);
@@ -136,13 +139,13 @@ session_start();
 							}else{	
 								
 								//requete préparé
-								$requestCreateAccount="INSERT INTO User (Nom,Prénom,Adresse_Mail,Password, Téléphone,Adresse_Client,Code_Postal,Commentaires_Produit, Cookies, Type ) 
+								$requestCreateAccount="INSERT INTO User (Nom,Prénom,Adresse_Mail,Password, Téléphone,Adresse_Client,Code_Postal,Commentaires_Produit, Panier, Type ) 
 								VALUES(?,?,?,?,?,?,?,?,?,?)";
 
 								$resultCreateAccount=mysqli_prepare($connect,$requestCreateAccount);					
 								
 								//bind des résultat de la requete
-								$var=mysqli_stmt_bind_param($resultCreateAccount,'ssssisisss',$Nom_Client,$Prenom_Client,$Adresse_Mail_Client_Create, $Password_Client_Create , $Telephone_Client, $Adresse_Client,$CodePostal_Client,$Commentaires_Produit, $cookies ,$Type );
+								$var=mysqli_stmt_bind_param($resultCreateAccount,'ssssisisss',$Nom_Client,$Prenom_Client,$Adresse_Mail_Client_Create, $Password_Client_Create , $Telephone_Client, $Adresse_Client,$CodePostal_Client,$Commentaires_Produit, $Panier ,$Type );
 
 								$var=mysqli_stmt_execute($resultCreateAccount);
 					
